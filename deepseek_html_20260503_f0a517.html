@@ -32,15 +32,7 @@
       width: auto;
       height: auto;
       object-fit: cover;
-      /* slow-motion effect: play at reduced speed */
-      animation: slowMotionPlay 1s linear infinite;
     }
-    /* custom slow motion via playbackRate is set via JS, but CSS fallback ensures smoothness */
-    @keyframes slowMotionPlay {
-      0% { transform: translate(-50%, -50%) scale(1); }
-      100% { transform: translate(-50%, -50%) scale(1); }
-    }
-    /* dark overlay for text contrast + milky galaxy shimmer */
     .bg-overlay {
       position: fixed;
       top: 0;
@@ -61,7 +53,6 @@
       position: relative;
     }
 
-    /* custom scroll */
     ::-webkit-scrollbar {
       width: 6px;
     }
@@ -81,7 +72,6 @@
       z-index: 2;
     }
 
-    /* ========== HEADER : GLOSSY GLASS ========== */
     header {
       position: sticky;
       top: 0;
@@ -111,7 +101,6 @@
       -webkit-background-clip: text;
       color: transparent;
       text-shadow: 0 0 20px rgba(227, 188, 139, 0.7);
-      transition: 0.3s;
     }
     .logo span {
       font-size: 0.7rem;
@@ -120,7 +109,6 @@
       display: block;
       font-weight: 300;
       text-transform: uppercase;
-      text-shadow: 0 0 4px #000;
     }
 
     .nav-links {
@@ -157,7 +145,6 @@
     .cart-icon:hover {
       background: #c49a6c30;
       border-color: #e2bc8b;
-      box-shadow: 0 0 12px rgba(196,154,108,0.3);
     }
     .cart-count {
       background: #c49a6c;
@@ -168,7 +155,6 @@
       font-weight: bold;
     }
 
-    /* ========== CINEMATIC HERO BANNER ========== */
     .hero-banner {
       margin-top: 24px;
       position: relative;
@@ -185,34 +171,36 @@
     .banner-slide {
       flex: 0 0 100%;
       position: relative;
-      min-height: 480px;
+      min-height: 520px;
       background-size: cover;
-      background-position: center 30%;
+      background-position: center center;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      background-blend-mode: overlay;
     }
     .banner-overlay {
-      background: linear-gradient(135deg, rgba(0,0,0,0.55), rgba(30,20,45,0.7));
+      background: linear-gradient(135deg, rgba(0,0,0,0.45), rgba(30,20,45,0.55));
       width: 100%;
       height: 100%;
       padding: 80px 24px;
-      backdrop-filter: brightness(0.95);
+      backdrop-filter: brightness(0.92);
+      border-radius: 32px;
     }
     .banner-text h2 {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(2rem, 6vw, 3.6rem);
+      font-size: clamp(1.8rem, 5vw, 3rem);
       font-weight: 600;
       margin-bottom: 12px;
-      text-shadow: 0 2px 15px black;
+      text-shadow: 0 2px 12px black;
+      letter-spacing: 2px;
     }
     .banner-text p {
       font-size: 1.1rem;
       max-width: 550px;
       margin: 0 auto;
       color: #f5e7d9;
+      font-weight: 400;
     }
     .banner-dots {
       position: absolute;
@@ -254,7 +242,6 @@
       text-align: center;
     }
 
-    /* 4 pattern grid */
     .products-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -274,14 +261,12 @@
     .product-card:hover {
       transform: translateY(-8px);
       border-color: rgba(226, 188, 139, 0.8);
-      box-shadow: 0 28px 40px -14px black;
     }
     .product-img {
       width: 100%;
       aspect-ratio: 1 / 1;
       object-fit: cover;
       background: #1c142b;
-      transition: 0.3s;
     }
     .product-info {
       padding: 20px 18px 24px;
@@ -322,7 +307,6 @@
       color: #120c1c;
     }
 
-    /* cart sidebar */
     .cart-overlay {
       position: fixed;
       top: 0;
@@ -350,7 +334,6 @@
       background: #0c0820ea;
       backdrop-filter: blur(24px);
       border-left: 1px solid #c49a6c99;
-      box-shadow: -8px 0 40px rgba(0,0,0,0.7);
       z-index: 201;
       transform: translateX(100%);
       transition: transform 0.3s ease-out;
@@ -460,8 +443,9 @@
       .products-grid { grid-template-columns: 1fr; }
       .container { padding: 0 20px; }
       .navbar { flex-direction: column; }
-      .banner-slide { min-height: 340px; }
+      .banner-slide { min-height: 380px; }
       .toast-msg { white-space: normal; text-align: center; width: 80%; }
+      .banner-overlay { padding: 40px 16px; }
     }
   </style>
 </head>
@@ -470,9 +454,7 @@
 <!-- ULTRA 4K MILKY WAY SLOW MOTION VIDEO BACKGROUND -->
 <div class="video-background">
   <video id="spaceVideo" autoplay muted loop playsinline disablePictureInPicture>
-    <!-- High quality simulated 4K Milky Way timelapse / slow-motion friendly source -->
     <source src="https://assets.mixkit.co/videos/preview/mixkit-starry-night-sky-over-the-mountains-41406-large.mp4" type="video/mp4">
-    <!-- Fallback: smooth starry nebula effect, but we'll also add a gradient backup -->
   </video>
 </div>
 <div class="bg-overlay"></div>
@@ -498,18 +480,36 @@
 </header>
 
 <main>
-  <!-- AESTHETIC JEWELRY BANNERS -->
+  <!-- YOUR CUSTOM BANNER IMAGES (one.jpg, two.jpg, three.jpg) -->
   <div class="container">
     <div class="hero-banner" id="heroBanner">
       <div class="banner-slider" id="bannerSlider">
-        <div class="banner-slide" style="background-image: linear-gradient(0deg, rgba(0,0,0,0.6), rgba(0,0,0,0.3)), url(one.jpg);">
-          <div class="banner-overlay"><div class="banner-text"><h2>Celestial Radiance</h2><p>Handcrafted with stardust & heritage</p></div></div>
+        <!-- Banner 1: one.jpg -->
+        <div class="banner-slide" style="background-image: linear-gradient(0deg, rgba(0,0,0,0.5), rgba(0,0,0,0.3)), url('one.jpg');">
+          <div class="banner-overlay">
+            <div class="banner-text">
+              <h2>Celestial Radiance</h2>
+              <p>Handcrafted with stardust & heritage</p>
+            </div>
+          </div>
         </div>
-        <div class="banner-slide" style="background-image: linear-gradient(0deg, rgba(0,0,0,0.5), rgba(0,0,0,0.4)), url(two.jpg);">
-          <div class="banner-overlay"><div class="banner-text"><h2>Milky Way Collection</h2><p>Elegance that echoes the infinite cosmos</p></div></div>
+        <!-- Banner 2: two.jpg -->
+        <div class="banner-slide" style="background-image: linear-gradient(0deg, rgba(0,0,0,0.5), rgba(0,0,0,0.3)), url('two.jpg');">
+          <div class="banner-overlay">
+            <div class="banner-text">
+              <h2>Milky Way Collection</h2>
+              <p>Elegance that echoes the infinite cosmos</p>
+            </div>
+          </div>
         </div>
-        <div class="banner-slide" style="background-image: linear-gradient(0deg, rgba(0,0,0,0.6), rgba(0,0,0,0.3)), url(three.jpg);">
-          <div class="banner-overlay"><div class="banner-text"><h2>Timeless Treasures</h2><p>Every piece tells a celestial story</p></div></div>
+        <!-- Banner 3: three.jpg -->
+        <div class="banner-slide" style="background-image: linear-gradient(0deg, rgba(0,0,0,0.5), rgba(0,0,0,0.3)), url('three.jpg');">
+          <div class="banner-overlay">
+            <div class="banner-text">
+              <h2>Timeless Treasures</h2>
+              <p>Every piece tells a celestial story</p>
+            </div>
+          </div>
         </div>
       </div>
       <div class="banner-dots" id="bannerDots"></div>
@@ -538,18 +538,17 @@
 <div id="toastMsg" class="toast-msg"></div>
 
 <script>
-  // ---------- SLOW MOTION 4K VIDEO CONTROL ----------
+  // SLOW MOTION 4K VIDEO CONTROL
   const video = document.getElementById('spaceVideo');
   if (video) {
-    video.playbackRate = 0.4;   // ultra smooth slow motion (40% speed)
+    video.playbackRate = 0.4;
     video.addEventListener('loadeddata', () => {
       video.playbackRate = 0.4;
     });
-    // fallback for autoplay policy: ensure video starts slow
-    video.play().catch(e => console.log("autoplay blocked? but style works"));
+    video.play().catch(e => console.log("autoplay blocked"));
   }
 
-  // ---------- PRODUCTS (8 items = 2 rows of 4) ----------
+  // PRODUCTS DATA
   const products = [
     { id: 1, name: "Aurora Halo Necklace", price: 219, desc: "18k gold plate, moonstone center", img: "https://placehold.co/600x600/2f253f/cfaa7a?text=✨+NEBULA" },
     { id: 2, name: "Nova Ring Duo", price: 179, desc: "Stackable silver & onyx", img: "https://placehold.co/600x600/332841/dbbd92?text=💍+RINGS" },
@@ -562,7 +561,6 @@
   ];
 
   let cart = [];
-  // DOM
   const productsGrid = document.getElementById("productsGrid");
   const cartCountSpan = document.getElementById("cartCount");
   const cartOverlay = document.getElementById("cartOverlay");
@@ -631,7 +629,7 @@
   function closeCart() { cartOverlay.classList.remove("open"); document.body.style.overflow=""; }
   function handleCheckout() { if(cart.length===0) showToast("Your cosmic cart is empty — add treasures 💫", 1800); else showToast("✨ THANK YOU FOR SHOPPING AT MANALI ELEGANCE ✨ (demo checkout)", 2300); }
 
-  // ----- banner slider with auto rotate (cinematic)
+  // BANNER SLIDER
   let currentSlide = 0;
   const bannerSlider = document.getElementById("bannerSlider");
   const dotsContainer = document.getElementById("bannerDots");
@@ -645,7 +643,7 @@
   function buildDots() { if(!dotsContainer) return; dotsContainer.innerHTML=""; slides.forEach((_,idx)=>{ const dot = document.createElement("div"); dot.classList.add("dot"); if(idx===currentSlide) dot.classList.add("active"); dot.addEventListener("click",()=>{ goToSlide(idx); startAutoSlide(); }); dotsContainer.appendChild(dot); }); }
   if(slides.length) { buildDots(); startAutoSlide(); }
 
-  // event listeners
+  // EVENT LISTENERS
   if(cartIconBtn) cartIconBtn.addEventListener("click", openCart);
   if(closeCartBtn) closeCartBtn.addEventListener("click", closeCart);
   cartOverlay.addEventListener("click", (e)=>{ if(e.target===cartOverlay) closeCart(); });
